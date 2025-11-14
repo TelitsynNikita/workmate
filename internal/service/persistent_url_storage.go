@@ -1,6 +1,10 @@
 package service
 
-import "workmate/internal/repository"
+import (
+	"fmt"
+	"workmate/internal/model"
+	"workmate/internal/repository"
+)
 
 type URL struct {
 	URLStorage repository.URLStorage
@@ -12,6 +16,24 @@ func NewURLService(repo repository.URLStorage) *URL {
 	}
 }
 
-func (s *URL) GetUrlByID(id uint) (int, error) {
+func (u *URL) GetUrlByID(ids []int) (int, error) {
+	links, err := u.URLStorage.GetUrlByIDs(ids)
+	if err != nil {
+		return 0, err
+	}
+
+	fmt.Println(links)
+
 	return 0, nil
+}
+
+func (u *URL) CheckLinksStatusByUrl(urls []string) (model.CheckLinksStatusByUrlResponse, error) {
+	id, links, err := u.URLStorage.GetLinksByUrl(urls)
+	if err != nil {
+		return model.CheckLinksStatusByUrlResponse{}, err
+	}
+
+	fmt.Println(id, links)
+
+	return model.CheckLinksStatusByUrlResponse{}, nil
 }

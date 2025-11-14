@@ -1,9 +1,13 @@
 package service
 
-import "workmate/internal/repository"
+import (
+	"workmate/internal/model"
+	"workmate/internal/repository"
+)
 
 type URLService interface {
-	GetUrlByID(id uint) (int, error)
+	GetUrlByID(id []int) (int, error)
+	CheckLinksStatusByUrl(urls []string) (model.CheckLinksStatusByUrlResponse, error)
 }
 
 type Service struct {
